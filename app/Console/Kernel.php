@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\Inspire::class,
-        \App\Console\Commands\TestCmd::class,
+        \App\Console\Commands\Job::class,
     ];
 
     /**
@@ -27,6 +27,6 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('inspire')->hourly();
         //$schedule->command('foo')->everyFiveMinutes();
-        $schedule->command('test')->everyMinute();
+        $schedule->command('job')->hourly();
     }
 }

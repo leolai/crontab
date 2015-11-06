@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 class Data extends Model
 {
 	protected $table = 'datas';
@@ -20,5 +20,28 @@ class Data extends Model
     	}
     	
     	return false;
+	}
+	
+	/**
+	 * 今天的
+	 */
+	public static function today(){
+		$today = Carbon::today();
+		return self::where('created_at', '>=', $today->timestamp)->paginate(20);
+	}
+	
+	/**
+	 * 查询过去一小时
+	 */
+	public static function lasthour(){
+		$lasthour = (new Carbon('last hour'))->timestamp;
+		return self::where('created_at', '>=', $lasthour)->paginate(20);
+	}
+	
+	/**
+	 * 查询所有
+	 */
+	public static function alls(){
+		return self::orderBy('id', 'DESC')->paginate(20);
 	}
 }

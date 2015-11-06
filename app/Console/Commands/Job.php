@@ -50,10 +50,13 @@ class Job extends Command
     	
     	Mail::send('emails.joblist', ['data'=>$data], function($message)
     	{
-    		$subject = date('Y-m-d H:i:s').' 最新工作列表';
+            $sendto = Config::get('site51.sendto');
+            $cc = Config::get('site51.cc');
+
+    		$subject = date('Y-m-d H:i').'-最新工作列表';
     		$message->subject($subject);
     		$message->from('phpython@163.com', 'phpython');
-    		$message->to('laijim@outlook.com', 'laijim')->cc('phpython@163.com');
+    		$message->to($sendto, 'SimonYu')->cc($cc);
     	});
     	
     	Log::info('执行了一次操作！');

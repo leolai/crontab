@@ -216,7 +216,7 @@ class Job extends Command
     	$ret = [];
     	foreach ($datas as $info){//站点=>[[title,time],]
     		try {
-    			if(!Data::where('title', '=', $info[0])->exists()){//不存在则插入
+    			if(!Data::where('title', '=', $info[0])->where('remark2', $info[3])->exists()){//不存在则插入
    					$model = new Data();
    					$model->title = $info[1];//岗位名称
                     $model->url = $info[0];

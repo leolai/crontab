@@ -119,7 +119,7 @@ class Job extends Command
 		$headers[] = 'Cache-Control: no-cache';
 		$headers[] = 'Content-Type: charset=utf-8';
 		$headers[] = 'Host: u.oa.com';
-		$headers[] = 'Referer: http://u.oa.com/index.html';
+		$headers[] = 'Referer: http://www.51job.com/index.html';
 		$headers[] = 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:28.0) Gecko/20100101 Firefox/28.0';
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		

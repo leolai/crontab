@@ -53,7 +53,7 @@ class Job extends Command
             $sendto = Config::get('site51.sendto');
             $cc = Config::get('site51.cc');
 
-    		$subject = date('Y-m-d H:i').'-最新工作列表';
+    		$subject = date('Y-m-d H:i').'-(修正链接)最新工作列表';
     		$message->subject($subject);
     		$message->from('phpython@163.com', 'phpython');
     		$message->to($sendto, 'SimonYu')->cc($cc);

@@ -60,6 +60,7 @@ class Job extends Command
     	});
     	
     	Log::info('执行了一次操作！');
+    	exit(0);
     }
     
     /**

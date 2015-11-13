@@ -217,7 +217,8 @@ class Job extends Command
     	$ret = [];
     	foreach ($datas as $info){//站点=>[[title,time],]
     		try {
-    			if(!Data::where('title', '=', $info[0])->where('remark2', $info[3])->exists()){//不存在则插入
+    			if($this->filterTitle($info[1]) === false) continue;//过滤不符合的标题
+    			if(!Data::where('title', '=', $info[1])->where('remark2', $info[3])->exists()){//不存在则插入
    					$model = new Data();
    					$model->title = $info[1];//岗位名称
                     $model->url = $info[0];
@@ -256,5 +257,23 @@ class Job extends Command
      */
     public function sendWeixin($datas = []){
     	
+    }
+    
+    /**
+     * 过滤不符合条件的标题
+     * @param string $title
+     * @return boolean
+     */
+    public function filterTitle($title = ''){
+    	if(!$title) return false;
+    	 $flag = true;
+    	foreach(Config::get('site51.filterTitle') as $keyword){
+    		if(strpos($title, $keyword) !== false){
+    			$flag = false;
+    			break;
+    		}
+    	}
+    	 
+    	return $flag;
     }
 }

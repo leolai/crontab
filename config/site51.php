@@ -29,4 +29,5 @@ return [
 	'contentPattern'=>'',
 	'sendto'=>'377389068@qq.com',
 	'cc'=>'phpython@163.com',
+	'filterTitle'=>['淘宝','销售','外贸','跟单','老师','业务','网络','营销','互联网'],
 ];

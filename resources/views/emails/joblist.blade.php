@@ -15,12 +15,11 @@ td{
 	<thead>
 		<tr>
 			<td width="5%">No.</td>
-			<td width="15%">岗位名称</td>
-			<td width="10%">公司名称</td>
-			<td width="5%">工作地点</td>
-			<td width="20%">要求</td>
-			<td width="40%">岗位描述</td>
-			<td width="5%">发布时间</td>
+			<td width="30%">岗位名称</td>
+			<td width="20%">公司名称</td>
+			<td width="10%">工作地点</td>
+			<td width="20%">薪资</td>
+			<td width="15%">发布时间</td>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,7 +32,6 @@ td{
 		    	<td><a href="{!! $one[2] !!}" target="_blank">{{ $one[3] }}</a></td>
 		    	<td>{{ $one[4] }}</td>
 		    	<td>{{ $one[6] }}</td>
-		    	<td>{{ $one[7] }}</td>
 		    	<td>{{ $one[5] }}</td>
 		    </tr>
 		@endforeach

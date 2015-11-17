@@ -112,15 +112,22 @@ class Job extends Command
     	
     	$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_ENCODING, "gzip");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		
 		$headers = [];
 		$headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
 		$headers[] = 'Accept-Language: zh-CN,zh;q=0.8';
-		$headers[] = 'Cache-Control: no-cache';
+        $headers[] = 'Accept-Encoding:gzip, deflate, sdch';
+        $headers[] = 'Cache-Control: no-cache';
+        $headers[] = 'Connection:keep-alive';
+        $headers[] = 'Cookie:guid=14476841497497720052; guide=1; 51job=cenglish%3D0; search=jobarea%7E%60040000%7C%21ord_field%7E%600%7C%21list_type%7E%600%7C%21recentSearch0%7E%602%A1%FB%A1%FA040000%2C00%A1%FB%A1%FA000000%A1%FB%A1%FA0000%A1%FB%A1%FA00%A1%FB%A1%FA9%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FAIC+%B4%A5%C3%FE%A1%FB%A1%FA2%A1%FB%A1%FA%A1%FB%A1%FA-1%A1%FB%A1%FA1447684849%A1%FB%A1%FA0%A1%FB%A1%FA%7C%21recentSearch1%7E%602%A1%FB%A1%FA040000%2C00%A1%FB%A1%FA000000%A1%FB%A1%FA0000%A1%FB%A1%FA00%A1%FB%A1%FA9%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA+PM%A1%FB%A1%FA0%A1%FB%A1%FA%A1%FB%A1%FA-1%A1%FB%A1%FA1447684799%A1%FB%A1%FA0%A1%FB%A1%FA%7C%21recentSearch2%7E%602%A1%FB%A1%FA040000%2C00%A1%FB%A1%FA000000%A1%FB%A1%FA0000%A1%FB%A1%FA00%A1%FB%A1%FA9%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FATP%A1%FB%A1%FA0%A1%FB%A1%FA%A1%FB%A1%FA-1%A1%FB%A1%FA1447684565%A1%FB%A1%FA0%A1%FB%A1%FA%7C%21recentSearch3%7E%602%A1%FB%A1%FA040000%2C00%A1%FB%A1%FA000000%A1%FB%A1%FA0000%A1%FB%A1%FA00%A1%FB%A1%FA9%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FATP++IC+%CF%EE%C4%BF%A1%FB%A1%FA2%A1%FB%A1%FA%A1%FB%A1%FA-1%A1%FB%A1%FA1447684833%A1%FB%A1%FA0%A1%FB%A1%FA%7C%21recentSearch4%7E%602%A1%FB%A1%FA040000%2C00%A1%FB%A1%FA000000%A1%FB%A1%FA0000%A1%FB%A1%FA00%A1%FB%A1%FA9%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FA99%A1%FB%A1%FAa%A1%FB%A1%FA0%A1%FB%A1%FA%A1%FB%A1%FA-1%A1%FB%A1%FA1447686662%A1%FB%A1%FA0%A1%FB%A1%FA%7C%21';
+        $headers[] = 'Cache-Control: no-cache';
+		$headers[] = 'Pragma:no-cache';
+        $headers[] = 'Upgrade-Insecure-Requests:1';
 		$headers[] = 'Content-Type: charset=utf-8';
 		$headers[] = 'Host: search.51job.com';
-		$headers[] = 'Referer: http://search.51job.com';
+		$headers[] = 'Referer: http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=040000%2C00&district=000000&funtype=0000&industrytype=00&issuedate=9&providesalary=99&keyword=IC%20%E8%A7%A6%E6%91%B8&keywordtype=2&curr_page=4&lang=c&stype=2&postchannel=0000&workyear=99&cotype=99&degreefrom=99&jobterm=99&companysize=99&lonlat=0%2C0&radius=-1&ord_field=0&list_type=0&fromType=14&dibiaoid=0&confirmdate=9';
 		$headers[] = 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:28.0) Gecko/20100101 Firefox/28.0';
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		
@@ -136,7 +143,10 @@ class Job extends Command
 			Log::warning('curl信息' . json_encode(curl_getinfo($ch), JSON_UNESCAPED_UNICODE));
 			$res = '';
 		}
-		
+        /////////测试抓取效果
+        //Log::warning('curl res'.$res);
+        //exit();
+        ////////
 		curl_close($ch);
 		return $res;
     }
@@ -144,24 +154,34 @@ class Job extends Command
     /**
      * 从HTML中解析出所有的数据
      * 正则匹配到的结果：
-     * Array
-(
-    [0] => Array
-        (
-            [0] => <span>2015-10-28《文字变形-玩字》</span>
-            [1] => span>2015-10-29fa</span>
-        )
-    [1] => Array
-        (
-            [0] => 2015-10-28
-            [1] => 2015-10-29
-        )
-    [2] => Array
-        (
-            [0] => 《文字变形-玩字》
-            [1] => fa
-        )
-)
+     * 1 =>
+    array (
+    0 => 'http://jobs.51job.com/shenzhen-nsq/53473657.html',
+    ),
+    2 =>
+    array (
+    0 => '单片机工程师',
+    ),
+    3 =>
+    array (
+    0 => 'http://jobs.51job.com/shenzhen-nsq/co1994273.html',
+    ),
+    4 =>
+    array (
+    0 => '深圳市艾博德科技股份有限公司',
+    ),
+    5 =>
+    array (
+    0 => '深圳-南山区',
+    ),
+    6 =>
+    array (
+    0 => '15-20万/年',
+    ),
+    7 =>
+    array (
+    0 => '11-06',
+    ),
      * @param string $str
      * 
      * @return array
@@ -182,7 +202,7 @@ class Job extends Command
     		$ret = [];
     		$count = count($res[0]);//所有匹配到的行
     		for($i=0; $i<$count; $i++){
-    			$datetime = Carbon::createFromFormat('Y-m-d', $res[6][$i])->toDateTimeString();
+    			$datetime = Carbon::createFromFormat('m-d', $res[7][$i])->toDateTimeString();
     			$ret[] = [
                     trim($res[1][$i]),//url
                     $this->clearStr($res[2][$i]),//岗位名称
@@ -190,8 +210,8 @@ class Job extends Command
                     $this->clearStr($res[4][$i]),//公司名称
                     $this->clearStr($res[5][$i]),//工作地点
                     $datetime,
-                    $this->clearStr($res[7][$i]),//要求
-                    $this->clearStr($res[8][$i]),//JD
+                    $this->clearStr($res[6][$i]),//薪资
+                    $this->clearStr($res[7][$i]),//时间
                 ];
     		}
     		return $ret;
@@ -226,8 +246,8 @@ class Job extends Command
                     $model->remark2 = $info[3];//公司
                     $model->remark3 = $info[4];//工作地点
                     $model->remark4 = $info[5];//发布时间
-                    $model->content = $info[6];//要求
-                    $model->desc = $info[7];//jd
+                    $model->content = $info[6];//薪资
+                    $model->desc = $info[7];//发布时间 raw
    					$model->save();
    					$ret[] = $info;
     			}

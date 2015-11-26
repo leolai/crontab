@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')->hourly();
+        //$schedule->command('inspire')->hourly();
         //$schedule->command('test')->everyMinute();
         //$schedule->command('job')->hourly();
         $schedule->command('job')->cron('0 * * * *');

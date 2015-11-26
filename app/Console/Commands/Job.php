@@ -41,6 +41,9 @@ class Job extends Command
      */
     public function handle()
     {
+    	$startTime = \Carbon\Carbon::now();
+    	Log::info('job start at:'.$startTime);
+    	
     	//取数据
     	$data = $this->getNews();
     	if(!$data || empty($data)){
@@ -59,7 +62,8 @@ class Job extends Command
     		$message->to($sendto, 'SimonYu')->cc($cc);
     	});
     	
-    	Log::info('执行了一次操作！');
+    	$endTime = \Carbon\Carbon::now();
+    	Log::info('job end at:'.$endTime);
     	exit(0);
     }
     
@@ -114,7 +118,7 @@ class Job extends Command
 		curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_ENCODING, "gzip");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		
+		curl_setopt($ch, CURLOPT_TIMEOUT, 20);//设置超时时间
 		$headers = [];
 		$headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
 		$headers[] = 'Accept-Language: zh-CN,zh;q=0.8';
